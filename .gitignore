@@ -1,0 +1,66 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Django stuff:
+*.log
+*.pot
+*.pyc
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Django media/uploads
+media/
+staticfiles/
+
+# If using Postgres or other local databases
+*.pgsql
+*.sqlite3
+
+# Environment files
+.env
+.env.*
+
+# VS Code settings
+.vscode/
+
+# Virtualenv
+venv/
+env/
+ENV/
+.venv/
+
+# Migrations
+*/migrations/__pycache__/
+*/migrations/*.pyc
+*/migrations/*.pyo
+*/migrations/*.pyd
+*/migrations/*.pkl
+*/migrations/*.log
+
+# Pytest
+.pytest_cache/
+
+# Coverage reports
+htmlcov/
+.coverage
+coverage.xml
+*.cover
+
+# mypy
+.mypy_cache/
+.dmypy.json
+
+# PyCharm
+.idea/
+
+# macOS
+.DS_Store
+
+# Node (if using frontend with DRF)
+node_modules/

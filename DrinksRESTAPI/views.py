@@ -13,13 +13,9 @@ from .serializers import DrinkSerializer
 
 # API Endpoint Views
 @api_view(['GET', 'POST']) # Decorator for CRUD ops the corresponding endpoint should respond to
-def drinkListView(request):
-  # Defualt Request Method (in django when just hitting a url) is: get (read)
-  # We can add other request to do other operations in CRUD
-  # (C)rete = POST
-  # (R)ead =  GET
-  # (U)pdate = PUT (all fields) or PATCH (fields we specify)
-  # (D)elete = DELETE
+def drinkListView(request, format=None):
+  # When trying to get plain json trough browser, we need to go through the suffix formatter
+  # which takes a format argument from the corresponding view endpoint
 
   if request.method == 'GET': 
     # Serialization Work Flow (Python -> JSON)
@@ -47,7 +43,7 @@ class classDrinkListView(APIView):
     return Response(serializer.data)
 
 @api_view(['GET', 'PUT', "DELETE"])
-def drinkDetails(request, id): 
+def drinkDetails(request, id, format=None): 
   # In the URL, the regex attribute of id is another parameter
   # passed to the view that we can access
 

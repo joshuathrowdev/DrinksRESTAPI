@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from rest_framework.urlpatterns import format_suffix_patterns
+
 from . import views as v
 
 urlpatterns = [
@@ -28,3 +30,6 @@ urlpatterns = [
 
     path('classDrinks/', v.classDrinkListView.as_view(), name='class_drink_list_view'),
 ]
+
+urlpatterns = format_suffix_patterns(urlpatterns)
+# Formatter to get the plain json from the database

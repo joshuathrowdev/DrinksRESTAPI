@@ -18,7 +18,7 @@ def drinkListView(request):
   # We can add other request to do other operations in CRUD
   # (C)rete = POST
   # (R)ead =  GET
-  # (U)pdate = PUT or PATCH
+  # (U)pdate = PUT (all fields) or PATCH (fields we specify)
   # (D)elete = DELETE
 
   if request.method == 'GET': 
@@ -46,6 +46,37 @@ class classDrinkListView(APIView):
 
     return Response(serializer.data)
 
+@api_view(['GET', 'PUT', "DELETE"])
+def drinkDetails(request, id): 
+  # In the URL, the regex attribute of id is another parameter
+  # passed to the view that we can access
+
+  try:
+    drink = Drink.objects.get(pk=id)
+  except Drink.DoesNotExist:
+    return Response(status=status.HTTP_404_NOT_FOUND)
+
+  if request.method == 'GET': # Read
+    serializer = DrinkSerializer(drink)
+    return Response(serializer.data)
+
+  elif request.method == 'PUT': # Update
+    serializer = DrinkSerializer(drink, data=request.data)
+    # Updating a record in the database
+    # Passing the specific record we are looking at along with altered data
+    # that the we want to update to
+    # # Mapping that data onto the specific record
+
+    if serializer.is_valid():
+      serializer.save() 
+      return Response(serializer.data)
+    
+    # Response for Failed Validation
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+  elif request.method == 'DELETE': # Delete
+    drink.delete()
+    return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 

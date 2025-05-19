@@ -24,5 +24,7 @@ urlpatterns = [
     
     # API Endpoints
     path('drinks/', v.drinkListView, name='drink_list_view'),
+    path('drinks/<int:id>/', v.drinkDetails, name="drink_details_view"),
+
     path('classDrinks/', v.classDrinkListView.as_view(), name='class_drink_list_view'),
 ]

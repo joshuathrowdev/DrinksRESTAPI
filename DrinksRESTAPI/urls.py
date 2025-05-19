@@ -21,7 +21,8 @@ from . import views as v
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-
+    
+    # API Endpoints
     path('drinks/', v.drinkListView, name='drink_list_view'),
     path('classDrinks/', v.classDrinkListView.as_view(), name='class_drink_list_view'),
 ]

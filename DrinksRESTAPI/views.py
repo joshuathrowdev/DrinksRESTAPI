@@ -2,28 +2,39 @@ from django.http import JsonResponse
 
 # Rest Framework Stack Dependencies
 from rest_framework.views import APIView
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework import status
 
 from .models import Drink
 
 from .serializers import DrinkSerializer
 
 
-# API Endpoints
+# API Endpoint Views
+@api_view(['GET', 'POST']) # Decorator for CRUD ops the corresponding endpoint should respond to
 def drinkListView(request):
-  # Get all drinks
-  # Serialize them
-  # Return JSON
+  # Defualt Request Method (in django when just hitting a url) is: get (read)
+  # We can add other request to do other operations in CRUD
+  # (C)rete = POST
+  # (R)ead =  GET
+  # (U)pdate = PUT or PATCH
+  # (D)elete = DELETE
 
-  # Getting Query Set of all drinks 
-  drinks = Drink.objects.all()
+  if request.method == 'GET': 
+    # Serialization Work Flow (Python -> JSON)
+    drinks = Drink.objects.all()
+    serializer = DrinkSerializer(drinks, many=True)
 
-  serializer = DrinkSerializer(drinks, many=True)
-  # Since we are passing the serializer a container of objects,
-  # We have to set the many equal to true so it knows it a container
-  # of serializable objects
+    return JsonResponse({'drinks':serializer.data}) # Returns a JSON 
 
-  return JsonResponse({'drinks':serializer.data}) # Returns a JSON \
+  if request.method == 'POST':
+    # Deserialization Work Flow (JSON -> Python)
+    serializer = DrinkSerializer(data=request.data) # getting data from request
+    if serializer.is_valid():
+      serializer.save() # Save the instance of the serialized JSON data
+
+      return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class classDrinkListView(APIView):
